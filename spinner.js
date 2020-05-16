@@ -6,7 +6,7 @@ let lock = false;
 let once = true;
 let isStarted = false;
 let mins = 0;
-let seconds = 5;
+let seconds = 25;
 
 let sliceDegs = [];
 let label = [];

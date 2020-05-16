@@ -4,73 +4,97 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col" id="timer">
+            <h1 class="text-center" >Kalan Süre: </h1>
+            <h1 class="text-center" id="time">5:00</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center" id="wheel">
+            <canvas id="canvas" width="480px" height="480px"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center" id="starter">
+            <button style="margin-bottom: 8px; margin-top: 8px;" class="btn-primary" id="start-wheel">Çekilişi Başlat!</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class ="card col-6" id="people">
+            <div class="card-body">
+                <h2 class="card-title">Katılımcılar</h2>
+                <table class="table-responsive">
+                    <thead>
+                    <tr>
+                        <th class="sort" data-sort="name">İsim</th>
+                        <th class="sort" data-sort="chance">Bilet</th>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+                    </tbody>
+                    <tbody style="display:none;">
+                    <tr id="template-item">
+                        <td class="id" style="display:none;">1</td>
+                        <td class="name">Muhammed</td>
+                        <td class="chance">24</td>
+                        <td class="edit"><button class="edit-item-btn">Düzenle</button></td>
+                        <td class="remove"><button class="remove-item-btn">Sil</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class ="card col-6" id="winners">
+            <div class="card-body">
+                <h2 class="card-title">Kazananlar</h2>
+                <table>
+                    <thead>
+                    <tr>
+                        <th class="sort" data-sort="name">İsim</th>
+                        <th class="sort" data-sort="chance">Bilet</th>
+                    </tr>
+                    </thead>
+                    <tbody class="list" id="winnerList">
 
-<div id="timer">
-    <span id="time">5:00</span>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6" id="admin-panel">
+            <h2>Admin Paneli: </h2>
+            <table>
+                <td class="name">
+                    <input type="hidden" id="id-field" />
+                    <label for="name-field">İsim</label><input type="text" id="name-field" placeholder="İsim" />
+                </td>
+                <td class="chance">
+                    <label for="chance-field">Bilet Sayısı</label>
+                    <input type="number" id="chance-field" placeholder="Bilet" />
+                </td>
+                <td class="add">
+                    <button class="btn-success" id="add-btn">Add</button>
+                </td>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <button class="btn-primary" id="admin-toggle">Paneli Kapat</button>
+        </div>
+    </div>
 </div>
-<div id="wheel">
-    <canvas id="canvas" width="480" height="480"></canvas>
-</div>
-<div id="winners">
-    <h2>Kazananlar</h2>
-    <table>
-        <thead>
-        <tr>
-            <th class="sort" data-sort="name">İsim</th>
-            <th class="sort" data-sort="chance">Bilet</th>
-        </tr>
-        </thead>
-        <tbody class="list" id="winnerList">
-
-        </tbody>
-    </table>
-</div>
-<div id="starter">
-<button id="start-wheel">Çekilişi Başlat!</button>
-</div>
-<div id="admin-panel">
-    <table>
-        <td class="name">
-            <input type="hidden" id="id-field" />
-            <label for="name-field">İsim</label><input type="text" id="name-field" placeholder="İsim" />
-        </td>
-        <td class="chance">
-            <label for="chance-field">Bilet Sayısı</label>
-            <input type="number" id="chance-field" placeholder="Bilet" />
-        </td>
-        <td class="add">
-            <button id="add-btn">Add</button>
-        </td>
-    </table>
-</div>
-<div id="people">
-    <h2>Katılımcılar</h2>
-    <table>
-        <thead>
-        <tr>
-            <th class="sort" data-sort="name">İsim</th>
-            <th class="sort" data-sort="chance">Bilet</th>
-        </tr>
-        </thead>
-        <tbody class="list">
-
-        </tbody>
-            <tbody style="display:none;">
-                <tr id="template-item">
-                    <td class="id" style="display:none;">1</td>
-                    <td class="name">Muhammed</td>
-                    <td class="chance">24</td>
-                    <td class="edit"><button class="edit-item-btn">Düzenle</button></td>
-                    <td class="remove"><button class="remove-item-btn">Sil</button></td>
-                </tr>
-            </tbody>
-    </table>
-</div>
-<button id="admin-toggle">Paneli Kapat</button>
+<script src="spinner.js"></script>
+<script src="lister.js"></script>
 <script>
 $('#admin-toggle')[0].onclick = () => {
     if($('#admin-panel')[0].style.display !== "none"){
@@ -92,9 +116,5 @@ $('#admin-toggle')[0].onclick = () => {
     }
 }
 </script>
-
-<script src="spinner.js"></script>
-<script src="lister.js"></script>
-
 </body>
 </html>

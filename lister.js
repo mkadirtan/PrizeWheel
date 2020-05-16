@@ -1,3 +1,4 @@
+
 const options = {
     valueNames: ['id', 'name', 'chance', 'color'],
     item: 'template-item'
@@ -5,7 +6,14 @@ const options = {
 
 // Init list
 const peopleList = new List('people', options);
+(async function(){
+    await new Promise(res=>setInterval(()=>{
+        if(typeof $ !== "undefined"){
 
+            res()
+        }}, 100))
+    console.log("Timedout!")
+})()
 let idField = $('#id-field'),
     nameField = $('#name-field'),
     chanceField = $('#chance-field'),
@@ -41,7 +49,8 @@ addBtn.click(function() {
 
     peopleList.add(newPlayer);
     const res = peopleList.get("id", newPlayer.id);
-    res[0].elm.style.color = res[0]._values.color
+    res[0].elm.style.color = "white"//;res[0].values().color
+    res[0].elm.style['background-color'] = res[0].values().color
     spinnerAdd();
 
     clearFields();
@@ -49,6 +58,7 @@ addBtn.click(function() {
 });
 
 editBtn.click(function() {
+    console.log("clicked")
     var item = peopleList.get('id', idField.val())[0];
     item.values({
         id:idField.val(),
@@ -62,8 +72,8 @@ editBtn.click(function() {
 
 function refreshCallbacks() {
     // Needed to add new buttons to jQuery-extended object
-    removeBtns = $(removeBtns.selector);
-    editBtns = $(editBtns.selector);
+    removeBtns = $('.remove-item-btn');
+    editBtns = $('.edit-item-btn');
 
     removeBtns.click(function() {
         var itemId = $(this).closest('tr').find('.id').text();

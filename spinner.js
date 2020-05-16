@@ -1,12 +1,11 @@
 let ctx = canvas.getContext('2d');
-let width = canvas.width; // size
-let center = width/2;      // center
+let width = 245; // size
+let center = canvas.width/2;      // center
 let isStopped = false;
 let lock = false;
-let once = true;
 let isStarted = false;
-let mins = 0;
-let seconds = 25;
+let mins = 2;
+let seconds = 0;
 
 let sliceDegs = [];
 let label = [];
@@ -40,7 +39,7 @@ function anim() {
         }
         speed = speed > 0.2 ? speed *= slowDownRand : 0;
     }
-    if(once && lock && !speed){
+    if(lock && !speed){
         let lastDegree = ((360 - deg - 90) % 360)
         if(lastDegree < 0 ) lastDegree += 360;
         let condition = true;
@@ -56,12 +55,10 @@ function anim() {
             i++;
         }
         //ai = (totalDegs.length+ai)%totalDegs.length; // Fix negative index
-        once = false;
         $('#time')[0].textContent = "Son Kazanan : " + label[ai];
         $('#winnerList')[0].append(peopleList.items[ai].elm)
         enableStartButton(false, ai);
     }
-
     drawImg();
     window.requestAnimationFrame( anim )
 }
@@ -83,45 +80,66 @@ function spinnerAdd(){
     if(n>1 && !isStarted) {
         anim();
         isStarted = true;
+        const iMins = parseInt($('#mins')[0].value);
+        const iSeconds = parseInt($('#seconds')[0].value);
+
+        $('#times')[0].style.display = "none"
+        if(typeof iMins === typeof 5 && !isNaN(iMins)){
+            mins = iMins;
+        }
+        if(typeof iSeconds === typeof 5 && !isNaN(iSeconds)){
+            seconds = iSeconds;
+        }
+
         var timerInterval = setInterval(timeHandler, 1000)
         function timeHandler(){
+            //if(isStopped){ $('#time')[0].textContent = "Süre doldu!"; return;}
             if(seconds < 10){
                 $('#time')[0].textContent = mins + ":0" + seconds;
             } else {
                 $('#time')[0].textContent = mins + ":" + seconds;
             }
 
-            if(seconds < 1){
+            if(mins > 0 && seconds < 1){
                 seconds = 59;
                 mins -= 1;
             } else {
                 seconds -= 1;
             }
-            if(mins === 0 && seconds < 1){
+            if(mins < 1 && seconds < 1){
                 clearInterval(timerInterval);
-                setTimeout(()=>{$('#time')[0].textContent = "Süre doldu!"}, 1000);
-                enableStartButton(true);
+                $('#time')[0].textContent = "Süre doldu!";
             }
         }
     }
 }
 
+enableStartButton(true);
+
 function enableStartButton(isFirstTime, ai){
     if(isFirstTime){
         $('#start-wheel')[0].onclick = () => {
-            isStopped = true;
+            mins = 0;
+            seconds = 0;
+            setTimeout(()=>{isStopped = true}, 4000);
             $('#start-wheel')[0].onclick = () => {};
+            for(let i = 0; i < 10; i++){
+                setTimeout(()=>{speed += 1}, 200*i)
+            }
         }
     } else {
         $('#start-wheel')[0].onclick = () => {
             isStopped = false;
+            speed = 1.79;
             peopleList.remove('id', peopleList.items[ai].values().id);
             spinnerAdd();
+            for(let i = 0; i < 10; i++){
+                setTimeout(()=>{speed += 1}, 100*i)
+            }
             setTimeout(()=>{
                 isStopped=true;
-                once = true;
                 $('#start-wheel')[0].onclick = () => {};
-            }, 5000)
+            }, 4000)
             $('#start-wheel')[0].onclick = () => {};
         }
     }

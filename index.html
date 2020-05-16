@@ -14,17 +14,17 @@
     <div class="row">
         <div class="col" id="timer">
             <h1 class="text-center" >Kalan Süre: </h1>
-            <h1 class="text-center" id="time">5:00</h1>
+            <h1 class="text-center" id="time">2:00</h1>
         </div>
     </div>
     <div class="row">
         <div class="col-12 text-center" id="wheel">
-            <canvas id="canvas" width="480px" height="480px"></canvas>
+            <canvas style="background:url('background_480.jpg')" id="canvas" width="480px" height="480px"></canvas>
         </div>
     </div>
     <div class="row">
         <div class="col-12 text-center" id="starter">
-            <button style="margin-bottom: 8px; margin-top: 8px;" class="btn-primary" id="start-wheel">Çekilişi Başlat!</button>
+            <button style="margin-bottom: 8px; margin-top: 50px;" class="btn-primary" id="start-wheel">Çekilişi Başlat!</button>
         </div>
     </div>
     <div class="row">
@@ -85,6 +85,12 @@
                     <button class="btn-success" id="add-btn">Add</button>
                 </td>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div id="times" class="col">
+            <label for="mins">Dakika</label><input type="number" id="mins">
+            <label for="seconds">Saniye</label><input type="number" id="seconds">
         </div>
     </div>
     <div class="row">

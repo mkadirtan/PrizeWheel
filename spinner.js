@@ -162,8 +162,8 @@ function drawText(deg, text) {
     ctx.rotate(deg2rad(deg));
     ctx.textAlign = "left";
     ctx.fillStyle = "#fff";
-    ctx.font = '30px sans-serif';
-    ctx.fillText("\ \ " + text, 15, 10);
+    ctx.font = '12px Verdana';
+    ctx.fillText(text, 15, 0, 105);
     ctx.restore();
 }
 

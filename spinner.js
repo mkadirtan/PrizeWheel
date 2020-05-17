@@ -167,6 +167,7 @@ function drawText(deg, text) {
     ctx.restore();
 }
 
+
 function drawImg() {
     ctx.clearRect(0, 0, width, width);
     for(let i = 0; i < color.length; i++){
